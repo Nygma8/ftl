@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan Ruangan</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .form-actions button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-actions .cancel-button {
+            background-color: #dc3545;
+        }
+
+        .form-actions .save-button {
+            background-color: #007bff;
+        }
+
+        .form-actions button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Pesan Ruangan</h2>
+
+        <form id="pesanRuanganForm">
+            <div class="form-group">
+                <label for="unit">Unit</label>
+                <select id="unit" name="unit" required>
+                    <option value="">Pilih Unit</option>
+                    <option value="keuangan">Unit Keuangan</option>
+                    <option value="sdm">Unit SDM</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ruangMeeting">Ruang Meeting</label>
+                <select id="ruangMeeting" name="ruangMeeting" required>
+                    <option value="">Pilih Ruangan Meeting</option>
+                    <option value="prambanan">Ruang Prambanan</option>
+                    <option value="borobudur">Ruang Borobudur</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="kapasitas">Kapasitas</label>
+                <input type="text" id="kapasitas" name="kapasitas" placeholder="Kapasitas Ruangan" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="tanggalRapat">Tanggal Rapat</label>
+                <input type="date" id="tanggalRapat" name="tanggalRapat" required>
+            </div>
+
+            <div class="form-group">
+                <label for="waktuMulai">Waktu Mulai</label>
+                <input type="time" id="waktuMulai" name="waktuMulai" required>
+            </div>
+
+            <div class="form-group">
+                <label for="waktuSelesai">Waktu Selesai</label>
+                <input type="time" id="waktuSelesai" name="waktuSelesai" required>
+            </div>
+
+            <div class="form-group">
+                <label for="jumlahPeserta">Jumlah Peserta</label>
+                <input type="number" id="jumlahPeserta" name="jumlahPeserta" placeholder="Masukkan Jumlah Peserta" required>
+            </div>
+
+            <div class="form-group">
+                <label>Jenis Konsumsi</label>
+                <div>
+                    <input type="checkbox" id="snackSiang" name="konsumsi" value="Snack Siang">
+                    <label for="snackSiang">Snack Siang</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="makanSiang" name="konsumsi" value="Makan Siang">
+                    <label for="makanSiang">Makan Siang</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="snackSore" name="konsumsi" value="Snack Sore">
+                    <label for="snackSore">Snack Sore</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nominalKonsumsi">Nominal Konsumsi</label>
+                <input type="text" id="nominalKonsumsi" name="nominalKonsumsi" placeholder="Rp.">
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="cancel-button" onclick="window.history.back()">Batal</button>
+                <button type="submit" class="save-button">Simpan</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const ruangMeeting = document.getElementById('ruangMeeting');
+        const kapasitas = document.getElementById('kapasitas');
+
+        ruangMeeting.addEventListener('change', function () {
+            if (ruangMeeting.value === 'prambanan') {
+                kapasitas.value = '10 Orang';
+            } else if (ruangMeeting.value === 'borobudur') {
+                kapasitas.value = '20 Orang';
+            } else {
+                kapasitas.value = '';
+            }
+        });
+
+        // untuk menangani pengiriman form
+        document.getElementById('pesanRuanganForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const unit = document.getElementById('unit').value;
+            const ruangMeeting = document.getElementById('ruangMeeting').value;
+            const tanggalRapat = document.getElementById('tanggalRapat').value;
+            const waktuMulai = document.getElementById('waktuMulai').value;
+            const waktuSelesai = document.getElementById('waktuSelesai').value;
+            const jumlahPeserta = document.getElementById('jumlahPeserta').value;
+
+            const konsumsi = Array.from(document.querySelectorAll('input[name="konsumsi"]:checked'))
+                .map(checkbox => checkbox.value)
+                .join(', ');
+
+            const nominalKonsumsi = document.getElementById('nominalKonsumsi').value;
+
+            const data = {
+                unit,
+                ruangMeeting,
+                tanggalRapat,
+                waktuMulai,
+                waktuSelesai,
+                jumlahPeserta,
+                konsumsi,
+                nominalKonsumsi
+            };
+
+            localStorage.setItem('pesanRuanganData', JSON.stringify(data));
+            alert('Data berhasil disimpan!');
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Ruang Meeting</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Tambahkan CSS untuk memposisikan tombol di pojok kanan atas */
+        .add-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Tambahkan padding untuk container agar tidak tertimpa tombol */
+        .container {
+            position: relative;
+            padding-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ruang Meeting</h2>
+
+        <!-- Tombol untuk ke halaman pesan ruangan -->
+        <button onclick="window.location.href='pesan_ruangan.html'" class="add-button">Pesan Ruangan</button>
+
+        <!-- Tabel data -->
+        <table id="meetingTable">
+            <thead>
+                <tr>
+                    <th>Unit</th>
+                    <th>Ruang Meeting</th>
+                    <th>Tanggal Rapat</th>
+                    <th>Waktu</th>
+                    <th>Jumlah Peserta</th>
+                    <th>Jenis Konsumsi</th>
+                    <th>Nominal Konsumsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data akan diisi secara dinamis -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fungsi untuk memuat data dari localStorage dan menampilkannya di tabel
+        function loadMeetingData() {
+            const meetingData = JSON.parse(localStorage.getItem('pesanRuanganData'));
+            const tableBody = document.querySelector('#meetingTable tbody');
+
+            if (meetingData) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${meetingData.unit}</td>
+                    <td>${meetingData.ruangMeeting}</td>
+                    <td>${meetingData.tanggalRapat}</td>
+                    <td>${meetingData.waktuMulai} - ${meetingData.waktuSelesai}</td>
+                    <td>${meetingData.jumlahPeserta}</td>
+                    <td>${meetingData.konsumsi}</td>
+                    <td>${meetingData.nominalKonsumsi}</td>
+                `;
+                tableBody.appendChild(row);
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="7">Belum ada data ruangan yang dipesan.</td></tr>';
+            }
+        }
+
+        // Memuat data saat halaman dibuka
+        window.onload = loadMeetingData;
+    </script>
+</body>
+</html>
